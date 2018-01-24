@@ -1,0 +1,141 @@
+#ifndef RW_CURRENCY_DCMLERR_H
+#define RW_CURRENCY_DCMLERR_H
+
+/***************************************************************************
+ *
+ * Money.h++ error messages and exception classes
+ *
+ * $Id: //money/13/rw/dcmlerr.h#1 $
+ *
+ * Copyright (c) 1993-2015 Rogue Wave Software, Inc.  All Rights Reserved.
+ * 
+ * This computer software is owned by Rogue Wave Software, Inc. and is
+ * protected by U.S. copyright laws and other laws and by international
+ * treaties.  This computer software is furnished by Rogue Wave Software, Inc.
+ * pursuant to a written license agreement and may be used, copied, transmitted,
+ * and stored only in accordance with the terms of such license agreement and 
+ * with the inclusion of the above copyright notice.  This computer software or
+ * any other copies thereof may not be provided or otherwise made available to
+ * any other person.
+ * 
+ * U.S. Government Restricted Rights.  This computer software: (a) was
+ * developed at private expense and is in all respects the proprietary
+ * information of Rogue Wave Software, Inc.; (b) was not developed with 
+ * government funds; (c) is a trade secret of Rogue Wave Software, Inc. for all
+ * purposes of the Freedom of Information Act; and (d) is a commercial item and
+ * thus, pursuant to Section 12.212 of the Federal Acquisition Regulations (FAR)
+ * and DFAR Supplement Section 227.7202, Government's use, duplication or
+ * disclosure of the computer software is subject to the restrictions set forth
+ * by Rogue Wave Software, Inc.
+ *
+ **************************************************************************/
+
+/* for backward compatibility */
+#ifndef RW_MONEY_DCMLERR_H
+#  define RW_MONEY_DCMLERR_H
+#endif
+
+#include <rw/currency/decdefs.h>
+#include <rw/message.h>
+#include <rw/rwerr.h>
+#include <rw/decbase.h>
+
+
+#ifndef RW_NO_RECURSIVE_MACRO_DEF
+#  define RWDCML_FROMDBLOVER     RWDCML_FROMDBLOVER()
+#  define RWDCML_FROMDBLINEXACT  RWDCML_FROMDBLINEXACT()
+#  define RWDCML_FROMLDBLOVER    RWDCML_FROMLDBLOVER()
+#  define RWDCML_FROMLDBLINEXACT RWDCML_FROMLDBLINEXACT()
+#  define RWDCML_FROMPORTOVER    RWDCML_FROMPORTOVER()
+#  define RWDCML_FROMPORTINEXACT RWDCML_FROMPORTINEXACT()
+#  define RWDCML_ASSIGNOVER      RWDCML_ASSIGNOVER()
+#  define RWDCML_ADDOVER         RWDCML_ADDOVER()
+#  define RWDCML_SUBOVER         RWDCML_SUBOVER()
+#  define RWDCML_MULOVER         RWDCML_MULOVER()
+#  define RWDCML_DIVOVER         RWDCML_DIVOVER()
+#  define RWDCML_ADDINEXACT      RWDCML_ADDINEXACT()
+#  define RWDCML_SUBINEXACT      RWDCML_SUBINEXACT()
+#  define RWDCML_MULINEXACT      RWDCML_MULINEXACT()
+#  define RWDCML_DIVINEXACT      RWDCML_DIVINEXACT()
+#  define RWDCML_POWRANGE        RWDCML_POWRANGE ()
+#  define RWDCML_FORMATSDIFF     RWDCML_FORMATSDIFF()
+#  define RWDCML_CURRENCIESDIFF  RWDCML_CURRENCIESDIFF()
+#  define RWDCML_NULLEXCHGIMPL   RWDCML_NULLEXCHGIMPL()
+#  define RWDCML_NULLEXCHGGRPIMPL   RWDCML_NULLEXCHGGRPIMPL()
+#  define RWDCML_EXCHGSOURCEDIFF RWDCML_EXCHGSOURCEDIFF()
+#  define RWDCML_NOEXCHGOBJ      RWDCML_NOEXCHGOBJ()
+#else
+#  define RWDCML_FROMDBLOVER     rwdcml_FROMDBLOVER()
+#  define RWDCML_FROMDBLINEXACT  rwdcml_FROMDBLINEXACT()
+#  define RWDCML_FROMLDBLOVER    rwdcml_FROMLDBLOVER()
+#  define RWDCML_FROMLDBLINEXACT rwdcml_FROMLDBLINEXACT()
+#  define RWDCML_FROMPORTOVER    rwdcml_FROMPORTOVER()
+#  define RWDCML_FROMPORTINEXACT rwdcml_FROMPORTINEXACT()
+#  define RWDCML_ASSIGNOVER      rwdcml_ASSIGNOVER()
+#  define RWDCML_ADDOVER         rwdcml_ADDOVER()
+#  define RWDCML_SUBOVER         rwdcml_SUBOVER()
+#  define RWDCML_MULOVER         rwdcml_MULOVER()
+#  define RWDCML_DIVOVER         rwdcml_DIVOVER()
+#  define RWDCML_ADDINEXACT      rwdcml_ADDINEXACT()
+#  define RWDCML_SUBINEXACT      rwdcml_SUBINEXACT()
+#  define RWDCML_MULINEXACT      rwdcml_MULINEXACT()
+#  define RWDCML_DIVINEXACT      rwdcml_DIVINEXACT()
+#  define RWDCML_POWRANGE        rwdcml_POWRANGE ()
+#  define RWDCML_FORMATSDIFF     rwdcml_FORMATSDIFF()
+#  define RWDCML_CURRENCIESDIFF  rwdcml_CURRENCIESDIFF()
+#  define RWDCML_NULLEXCHGIMPL   rwdcml_NULLEXCHGIMPL()
+#  define RWDCML_NULLEXCHGGRPIMPL   rwdcml_NULLEXCHGGRPIMPL()
+#  define RWDCML_EXCHGSOURCEDIFF rwdcml_EXCHGSOURCEDIFF()
+#  define RWDCML_NOEXCHGOBJ      rwdcml_NOEXCHGOBJ()
+#endif // RW_NO_CPP_RECUSRION
+
+
+#ifdef RW_TRAILING_RWEXPORT
+RWMsgId RW_DCML_MEMBER_EXPORT RWDCML_FROMDBLOVER;
+RWMsgId RW_DCML_MEMBER_EXPORT RWDCML_FROMDBLINEXACT;
+RWMsgId RW_DCML_MEMBER_EXPORT RWDCML_FROMLDBLOVER;
+RWMsgId RW_DCML_MEMBER_EXPORT RWDCML_FROMLDBLINEXACT;
+RWMsgId RW_DCML_MEMBER_EXPORT RWDCML_FROMPORTOVER;
+RWMsgId RW_DCML_MEMBER_EXPORT RWDCML_FROMPORTINEXACT;
+RWMsgId RW_DCML_MEMBER_EXPORT RWDCML_ASSIGNOVER;
+RWMsgId RW_DCML_MEMBER_EXPORT RWDCML_ADDOVER;
+RWMsgId RW_DCML_MEMBER_EXPORT RWDCML_SUBOVER;
+RWMsgId RW_DCML_MEMBER_EXPORT RWDCML_MULOVER;
+RWMsgId RW_DCML_MEMBER_EXPORT RWDCML_DIVOVER;
+RWMsgId RW_DCML_MEMBER_EXPORT RWDCML_ADDINEXACT;
+RWMsgId RW_DCML_MEMBER_EXPORT RWDCML_SUBINEXACT;
+RWMsgId RW_DCML_MEMBER_EXPORT RWDCML_MULINEXACT;
+RWMsgId RW_DCML_MEMBER_EXPORT RWDCML_DIVINEXACT;
+RWMsgId RW_DCML_MEMBER_EXPORT RWDCML_POWRANGE;
+RWMsgId RW_DCML_MEMBER_EXPORT RWDCML_FORMATSDIFF;
+RWMsgId RW_DCML_MEMBER_EXPORT RWDCML_CURRENCIESDIFF;
+RWMsgId RW_DCML_MEMBER_EXPORT RWDCML_NULLEXCHGIMPL;
+RWMsgId RW_DCML_MEMBER_EXPORT RWDCML_NULLEXCHGGRPIMPL;
+RWMsgId RW_DCML_MEMBER_EXPORT RWDCML_EXCHGSOURCEDIFF;
+RWMsgId RW_DCML_MEMBER_EXPORT RWDCML_NOEXCHGOBJ;
+#else
+RW_DCML_MEMBER_EXPORT RWMsgId RWDCML_FROMDBLOVER;
+RW_DCML_MEMBER_EXPORT RWMsgId RWDCML_FROMDBLINEXACT;
+RW_DCML_MEMBER_EXPORT RWMsgId RWDCML_FROMLDBLOVER;
+RW_DCML_MEMBER_EXPORT RWMsgId RWDCML_FROMLDBLINEXACT;
+RW_DCML_MEMBER_EXPORT RWMsgId RWDCML_FROMPORTOVER;
+RW_DCML_MEMBER_EXPORT RWMsgId RWDCML_FROMPORTINEXACT;
+RW_DCML_MEMBER_EXPORT RWMsgId RWDCML_ASSIGNOVER;
+RW_DCML_MEMBER_EXPORT RWMsgId RWDCML_ADDOVER;
+RW_DCML_MEMBER_EXPORT RWMsgId RWDCML_SUBOVER;
+RW_DCML_MEMBER_EXPORT RWMsgId RWDCML_MULOVER;
+RW_DCML_MEMBER_EXPORT RWMsgId RWDCML_DIVOVER;
+RW_DCML_MEMBER_EXPORT RWMsgId RWDCML_ADDINEXACT;
+RW_DCML_MEMBER_EXPORT RWMsgId RWDCML_SUBINEXACT;
+RW_DCML_MEMBER_EXPORT RWMsgId RWDCML_MULINEXACT;
+RW_DCML_MEMBER_EXPORT RWMsgId RWDCML_DIVINEXACT;
+RW_DCML_MEMBER_EXPORT RWMsgId RWDCML_POWRANGE;
+RW_DCML_MEMBER_EXPORT RWMsgId RWDCML_FORMATSDIFF;
+RW_DCML_MEMBER_EXPORT RWMsgId RWDCML_CURRENCIESDIFF;
+RW_DCML_MEMBER_EXPORT RWMsgId RWDCML_NULLEXCHGIMPL;
+RW_DCML_MEMBER_EXPORT RWMsgId RWDCML_NULLEXCHGGRPIMPL;
+RW_DCML_MEMBER_EXPORT RWMsgId RWDCML_EXCHGSOURCEDIFF;
+RW_DCML_MEMBER_EXPORT RWMsgId RWDCML_NOEXCHGOBJ;
+#endif //RW_TRAILING_RWEXPORT
+
+#endif // RW_CURRENCY_DCMLERR_H
