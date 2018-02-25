@@ -1,0 +1,10 @@
+make clean
+make -f makefile.static
+
+make clean
+make -f makefile.shared
+
+make clean
+make -f makefile.debug
+
+make clean

@@ -1,0 +1,109 @@
+#!/bin/sh
+#
+#	Customization file for Tools.h++ source code
+#
+#	$Id: custom,v 6.8 1994/09/01 08:42:58 jims Exp $
+#
+#  (c) Copyright 1989, 1990, 1991, 1992, 1993, 1994 Rogue Wave Software, Inc.
+#  ALL RIGHTS RESERVED
+# 
+#  The software and information contained herein are proprietary to, and
+#  comprise valuable trade secrets of, Rogue Wave Software, Inc., which
+#  intends to preserve as trade secrets such software and information.
+#  This software is furnished pursuant to a written license agreement and
+#  may be used, copied, transmitted, and stored only in accordance with
+#  the terms of such license and with the inclusion of the above copyright
+#  notice.  This software and information or any other copies thereof may
+#  not be provided or otherwise made available to any other person.
+# 
+#  Notwithstanding any other lease or license that may pertain to, or
+#  accompany the delivery of, this computer software and information, the
+#  rights of the Government regarding its use, reproduction and disclosure
+#  are as set forth in Section 52.227-19 of the FARS Computer
+#  Software-Restricted Rights clause.
+#  
+#  Use, duplication, or disclosure by the Government is subject to
+#  restrictions as set forth in subparagraph (c)(1)(ii) of the Rights in
+#  Technical Data and Computer Software clause at DFARS 52.227-7013.
+#  
+#  This computer software and information is distributed with "restricted
+#  rights."  Use, duplication or disclosure is subject to restrictions as
+#  set forth in NASA FAR SUP 18-52.227-79 (April 1985) "Commercial
+#  Computer Software-Restricted Rights (April 1985)."  If the Clause at
+#  18-52.227-74 "Rights in Data General" is specified in the contract,
+#  then the "Alternate III" clause applies.
+# 
+# **************************************************************************
+# 
+#	Rogue Wave Software, Inc.
+#	PO Box 2328
+#	Corvallis, OR 97339
+#	503-754-3010
+#
+# If these # comments don't work, trim them.
+#
+
+cleanup="rm -f junk$$"
+
+trap '$cleanup ; exit 1' 1 2 3 15
+
+# Remove old match.c file used in earlier version of Tools.h++,
+# if it exists:
+if test -f match.c ; then
+  rm -f match.c
+fi
+
+datfile=../rw/config.data
+
+: "Does the data file exist?"
+if test -r "$datfile" ; then
+
+:  "Yes, read it in"
+  . $datfile
+
+
+
+
+  if test "$cppinvoke" = "g++" ; then
+    cat <<'EOF' >> makefile
+
+############################ Special rules for g++ ############################
+
+# Classes RWpistream and RWpostream cannot be compiled with the
+# optimizer on due to a bug in g++.  See toolread.doc for details.
+pstream.o:	pstream.$(EXT)
+	$(CPP) -I$(RWINCL) $(FPFLAG) $(DBG) $(MEMCK) $(SPECIAL) -c $*.$(EXT)
+
+EOF
+
+  fi
+
+# ==========================
+# Set up front end makefile
+# --------------------------
+     shared_cpp="#SHARED_CPPOPTS=   $shared_lib_compile_flags -D_RWBUILDSHARED"
+  shared_ld_opt="#SHARED_LDOPTS=    $shared_lib_ld_flags $RW_LIBINTL $RW_LIBW $RW_LIBXDR"
+  shared_ld_cmd="#SHARED_LD_LINK=   $shared_lib_ld_link"
+
+# Configure shared-lib build options if we know them:
+  if test $shared_lib_support = 'y' ; then
+    $sed "s@^#SHARED_CPPOPTS=.*@$shared_cpp@;
+          s@^#SHARED_LDOPTS=.*@$shared_ld_opt@;
+          s@^#SHARED_LD_LINK=.*@$shared_ld_cmd@;" \
+          makefile > makefile.tmp
+    mv makefile.tmp makefile
+  fi
+
+############################### Special for AIX ###############################
+
+  if test "$the_os" = "AIX" ; then
+    $sed "s@^$(LIBROOT).a:	$(OBJECTS).*@$(LIBROOT).NOT_USED_FOR_AIX:	$(OBJECTS)@;
+      s@^$(LIBROOT).AIX_SHARED:	$(OBJECTS).*@$(LIBROOT).a:  $(OBJECTS)@;" \
+      makefile > makefile.tmp
+    mv makefile.tmp makefile
+  fi
+    
+fi
+$cleanup
+
+exit 0
